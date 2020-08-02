@@ -130,7 +130,7 @@ async function init() {
         document.cookie = selectValue;
         render(data, option_num);
     };
-    
+
     var option = document.cookie;
     if(option == "") {
         option = "All";

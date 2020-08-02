@@ -97,13 +97,13 @@ function render(data, option_num) {
         .html("Engine efficiency depends primarily on the number of cylinders.");
     
     annotation1.style("opacity", 1)
-        .style("left", "320px")
-        .style("top", "300px")
+        .style("left", "380px")
+        .style("top", "280px")
         .html("Zero cylinders (electrical)");
     
     annotation2.style("opacity", 1)
         .style("left", "140px")
-        .style("top", "455px")
+        .style("top", "450px")
         .html("Two to four\ncylinders");
     
     annotation3.style("opacity", 1)

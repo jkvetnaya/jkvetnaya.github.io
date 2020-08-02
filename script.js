@@ -39,8 +39,6 @@ function render(data, option_num) {
     var ys = d3.scaleLog().domain(ydomain)
                             .range(yrange);
 
-
-
     d3.select("svg")
         .append("g")
             .attr("transform",
@@ -66,29 +64,59 @@ function render(data, option_num) {
             })
             .on("mouseover", function(d, i){
                 if(option_num == "All" || d["EngineCylinders"] == option_num) {
-                    console.log("Mouseover: i=" + i+ " x=" + d3.event.pageX + " y=" + d3.event.pageY);
                     tooltip.style("opacity", 1)
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY) + "px")
-                            .html("Make: " + d["Make"] + 
-                            " Fuel: " + d["Fuel"] + 
-                            " Cylinders: " + d["EngineCylinders"] +
-                            " City MPG: " + d["AverageCityMPG"] +
-                            " Highway MPG: " + d["AverageHighwayMPG"]);
+                            .html("Make: " + d["Make"] + "\n" +
+                            " Fuel: " + d["Fuel"] + "\n" +
+                            " Cylinders: " + d["EngineCylinders"]);
+                }
+                var timer = d3.timer(function(duration) {
+                        console.log(duration);
+                        if (duration > 5500){
+                            tooltip.style("opacity", 0)
+                            timer.stop();
+                        }
+                    }, 5000);
+            })
+            .on("mousedown", function(d, i) {
+                if(option_num == "All" || d["EngineCylinders"] == option_num) {
+                    d3.select("svg")
+                        .append("g")
+                        .attr("transform",
+                            "translate("+margin+","+margin+")")
+                        .selectAll("annotation")
+                        .data(data)
+                        .enter()
+                        .append("annotation")
+                            .style("opacity", 1)
+                            .style("position", "absolute")
+                            .style("text-align", "left")
+                            .style("width", "150px") 
+                            .style("height", "50px")
+                            .style("background", "white")
+                            .style("color","darkblue")
+                            .style("border", "2px")   
+                            .style("white-space", "pre-wrap")
+                            .style("border-color", "red")
+                            .style("border-style", "dashed")
+                            .style("left", (d3.event.pageX) + "px")
+                            .style("top", (d3.event.pageY) + "px")
+                            .html("Make: " + d["Make"] + "\n" +
+                            " Fuel: " + d["Fuel"] + "\n" +
+                            " Cylinders: " + d["EngineCylinders"]);
                 }
             })
-            .on("mouseout", function() { tooltip.style("opacity", 0);})
     ;;
+    
     var yAxis = d3.axisLeft(ys)
             .tickValues([10, 20, 50, 100])
             .tickFormat(d3.format("~s"))
-            //.text("Average Highway MPG")
             ;
     
     var xAxis = d3.axisBottom(xs)
             .tickValues([10, 20, 50, 100])
             .tickFormat(d3.format("~s"))
-            //.text("Average City MPG")
             ;
     
     d3.select("svg")

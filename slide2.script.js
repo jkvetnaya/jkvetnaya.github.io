@@ -27,12 +27,12 @@ function render(data, option_num) {
     var tooltip = d3.select("#tooltip");
 
 
-    var xdomain = [10, 150];
-    var xrange = [0, width];
+    var xdomain = ["Diesel", "Electricity", "Gasoline"];
+    var xrange = [100, 200, 300];
     var ydomain = [10, 150];
     var yrange = [height, 0];
 
-    var xs = d3.scaleLog().domain(xdomain)
+    var xs = d3.scaleOrdinal().domain(xdomain)
                         .range(xrange);
 
 
@@ -51,12 +51,12 @@ function render(data, option_num) {
         .append("circle")
            .attr("cx", function(d, i) { 
                 if(option_num == "All" || d["EngineCylinders"] == option_num) {
-                    return xs(d["AverageCityMPG"]);
+                    return xs(d["Fuel"]);
                 }
             })
             .attr("cy", function(d, i) {
                 if(option_num == "All" || d["EngineCylinders"] == option_num) {
-                    return ys(d["AverageHighwayMPG"]);
+                    return ys(d["AverageCityMPG"]);
                 }
             })
             .attr("r", function(d, i) {    
@@ -66,29 +66,28 @@ function render(data, option_num) {
             })
             .on("mouseover", function(d, i){
                 if(option_num == "All" || d["EngineCylinders"] == option_num) {
-                    console.log("Mouseover: i=" + i+ " x=" + d3.event.pageX + " y=" + d3.event.pageY);
                     tooltip.style("opacity", 1)
                             .style("left", (d3.event.pageX) + "px")
                             .style("top", (d3.event.pageY) + "px")
-                            .html("Make: " + d["Make"] + 
-                            " Fuel: " + d["Fuel"] + 
-                            " Cylinders: " + d["EngineCylinders"] +
-                            " City MPG: " + d["AverageCityMPG"] +
-                            " Highway MPG: " + d["AverageHighwayMPG"]);
+                            .html("Make: " + d["Make"] + "\n" +
+                            " Fuel: " + d["Fuel"] + "\n" +
+                            " Cylinders: " + d["EngineCylinders"]);
                 }
-            })
-            .on("mouseout", function() { tooltip.style("opacity", 0);})
-    ;;
+                var timer = d3.timer(function(duration) {
+                        console.log(duration);
+                        if (duration > 5500){
+                            tooltip.style("opacity", 0)
+                            timer.stop();
+                        }
+                    }, 5000);
+            });
+    
     var yAxis = d3.axisLeft(ys)
             .tickValues([10, 20, 50, 100])
             .tickFormat(d3.format("~s"))
-            //.text("Average Highway MPG")
             ;
     
     var xAxis = d3.axisBottom(xs)
-            .tickValues([10, 20, 50, 100])
-            .tickFormat(d3.format("~s"))
-            //.text("Average City MPG")
             ;
     
     d3.select("svg")

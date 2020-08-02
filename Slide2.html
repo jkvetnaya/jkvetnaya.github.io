@@ -1,7 +1,7 @@
 <html>
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <style> 
-    circle {fill: lightblue; stroke: black;} 
+    circle {fill: lightgreen; stroke: black;} 
     #tooltip {
         opacity: 0;
         position: absolute;
@@ -13,6 +13,59 @@
         white-space: pre-wrap;
         border-color: darkblue;
         border-style:dashed;         
+    }
+    #annotation {
+        opacity: 0;
+        position: absolute;
+        text-align: left;
+        width: 500px; height: 30px;
+        background: white;
+        color: black;
+        border: 0px;   
+        white-space: pre-wrap;
+        border-color: black;
+        border-style:none;
+        font-size:14px;
+        font-weight: bold;
+    }
+    #annotation1 {
+        opacity: 0;
+        position: absolute;
+        text-align: left;
+        width: 50px; height: 30px;
+        background: white;
+        color:black;
+        border: 0px;   
+        white-space: pre-wrap;
+        border-color: black;
+        border-style:none;
+        font-size:11px
+    }
+    #annotation2 {
+        opacity: 0;
+        position: absolute;
+        text-align: left;
+        width: 50px; height: 30px;
+        background: white;
+        color:black;
+        border: 0px;   
+        white-space: pre-wrap;
+        border-color: black;
+        border-style:none;
+        font-size:11px
+    }
+    #annotation3 {
+        opacity: 0;
+        position: absolute;
+        text-align: left;
+        width: 50px; height: 30px;
+        background: none;
+        color:black;
+        border: 0px;   
+        white-space: pre-wrap;
+        border-color: black;
+        border-style:none;
+        font-size:11px
     }
 </style>
 <p> 
@@ -35,6 +88,12 @@
 </svg>
     
 <div id = "tooltip"></div>
+<div id = "annotation"></div>
+<div id = "annotation1"></div>
+<div id = "annotation2"></div>
+<div id = "annotation3"></div>
+    
+<script src="script.js"></script>
 
 <script src="slide2.script.js"></script>
 </body>

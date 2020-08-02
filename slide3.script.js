@@ -4,6 +4,10 @@ function option_number(option) {
         option_num = "All";     
     } else if(option == "Zero") {
         option_num = 0;
+    } else if(option == "Two") {
+        option_num = 2;
+    } else if(option == "Three") {
+        option_num = 3;
     } else if(option == "Four") {
         option_num = 4;
     } else if(option == "Six") {
@@ -16,6 +20,7 @@ function option_number(option) {
     return option_num;
 }
 
+
 function render(data, option_num) {
     d3.selectAll("svg > *").remove();
     var total_width = d3.select("svg").attr("width");
@@ -26,10 +31,14 @@ function render(data, option_num) {
 
     var tooltip = d3.select("#tooltip");
 
-
+    var annotation = d3.select("#annotation");
+    var annotation1 = d3.select("#annotation1");
+    var annotation2 = d3.select("#annotation2");
+    var annotation3 = d3.select("#annotation3");
+    
     var xdomain = ["Diesel", "Electricity", "Gasoline"];
     var xrange = [100, 200, 300];
-    var ydomain = [10, 150];
+    var ydomain = [5, 150];
     var yrange = [height, 0];
 
     var xs = d3.scaleOrdinal().domain(xdomain)
@@ -74,16 +83,34 @@ function render(data, option_num) {
                             " Cylinders: " + d["EngineCylinders"]);
                 }
                 var timer = d3.timer(function(duration) {
-                        console.log(duration);
-                        if (duration > 5500){
+                        if (duration > 2500){
                             tooltip.style("opacity", 0)
                             timer.stop();
                         }
-                    }, 5000);
+                    }, 2000);
             });
+    annotation.style("opacity", 1)
+        .style("left", "70px")
+        .style("top", "650px")
+        .html("Engine efficiency depends primarily on the number of cylinders.");
+    
+    annotation1.style("opacity", 1)
+        .style("left", "180px")
+        .style("top", "300px")
+        .html("Zero cylinders (electrical)");
+    
+    annotation2.style("opacity", 1)
+        .style("left", "290px")
+        .style("top", "430px")
+        .html("Two to four\ncylinders");
+    
+    annotation3.style("opacity", 1)
+        .style("left", "300px")
+        .style("top", "480px")
+        .html("Six to\ntwelve\ncylinders");
     
     var yAxis = d3.axisLeft(ys)
-            .tickValues([10, 20, 50, 100])
+            .tickValues([5, 10, 20, 50, 100])
             .tickFormat(d3.format("~s"))
             ;
     
@@ -109,7 +136,7 @@ async function init() {
     
 
     
-    var options_data = ["All", "Zero", "Four", "Six", "Eight", "Twelve"];
+    var options_data = ["All", "Zero", "Two", "Three", "Four", "Six", "Eight", "Twelve"];
 
     var select = d3.select("#dropdown")
       .append('select')

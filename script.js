@@ -1,9 +1,14 @@
+
 function option_number(option) {
     var option_num;
     if(option == "All") {
         option_num = "All";     
     } else if(option == "Zero") {
         option_num = 0;
+    } else if(option == "Two") {
+        option_num = 2;
+    } else if(option == "Three") {
+        option_num = 3;
     } else if(option == "Four") {
         option_num = 4;
     } else if(option == "Six") {
@@ -16,6 +21,7 @@ function option_number(option) {
     return option_num;
 }
 
+
 function render(data, option_num) {
     d3.selectAll("svg > *").remove();
     var total_width = d3.select("svg").attr("width");
@@ -25,7 +31,12 @@ function render(data, option_num) {
     height = total_height-2*margin;
 
     var tooltip = d3.select("#tooltip");
-
+  
+    var annotation = d3.select("#annotation");
+    var annotation1 = d3.select("#annotation1");
+    var annotation2 = d3.select("#annotation2");
+    var annotation3 = d3.select("#annotation3");
+    
 
     var xdomain = [10, 150];
     var xrange = [0, width];
@@ -70,44 +81,35 @@ function render(data, option_num) {
                             .html("Make: " + d["Make"] + "\n" +
                             " Fuel: " + d["Fuel"] + "\n" +
                             " Cylinders: " + d["EngineCylinders"]);
-                }
-                var timer = d3.timer(function(duration) {
-                        console.log(duration);
-                        if (duration > 5500){
-                            tooltip.style("opacity", 0)
-                            timer.stop();
-                        }
-                    }, 5000);
-            })
-            .on("mousedown", function(d, i) {
-                if(option_num == "All" || d["EngineCylinders"] == option_num) {
-                    d3.select("svg")
-                        .append("g")
-                        .attr("transform",
-                            "translate("+margin+","+margin+")")
-                        .selectAll("annotation")
-                        .data(data)
-                        .enter()
-                        .append("annotation")
-                            .style("opacity", 1)
-                            .style("position", "absolute")
-                            .style("text-align", "left")
-                            .style("width", "150px") 
-                            .style("height", "50px")
-                            .style("background", "white")
-                            .style("color","darkblue")
-                            .style("border", "2px")   
-                            .style("white-space", "pre-wrap")
-                            .style("border-color", "red")
-                            .style("border-style", "dashed")
-                            .style("left", (d3.event.pageX) + "px")
-                            .style("top", (d3.event.pageY) + "px")
-                            .html("Make: " + d["Make"] + "\n" +
-                            " Fuel: " + d["Fuel"] + "\n" +
-                            " Cylinders: " + d["EngineCylinders"]);
+
+                    var timer = d3.timer(function(duration) {
+                            if (duration > 2500){
+                                tooltip.style("opacity", 0)
+                                timer.stop();
+                            }
+                    }, 2000);
                 }
             })
     ;;
+    annotation.style("opacity", 1)
+        .style("left", "70px")
+        .style("top", "650px")
+        .html("Engine efficiency depends primarily on the number of cylinders.");
+    
+    annotation1.style("opacity", 1)
+        .style("left", "320px")
+        .style("top", "300px")
+        .html("Zero cylinders (electrical)");
+    
+    annotation2.style("opacity", 1)
+        .style("left", "140px")
+        .style("top", "455px")
+        .html("Two to four\ncylinders");
+    
+    annotation3.style("opacity", 1)
+        .style("left", "75px")
+        .style("top", "500px")
+        .html("Six to\ntwelve\ncylinders");
     
     var yAxis = d3.axisLeft(ys)
             .tickValues([10, 20, 50, 100])
@@ -138,7 +140,7 @@ async function init() {
     
 
     
-    var options_data = ["All", "Zero", "Four", "Six", "Eight", "Twelve"];
+    var options_data = ["All", "Zero", "Two", "Three", "Four", "Six", "Eight", "Twelve"];
 
     var select = d3.select("#dropdown")
       .append('select')
@@ -153,7 +155,6 @@ async function init() {
 
     function onchange() {
         selectValue = d3.select('select').property('value')
-        console.log("Options val = " + selectValue);
         var option_num = option_number(selectValue);
         document.cookie = selectValue;
         render(data, option_num);

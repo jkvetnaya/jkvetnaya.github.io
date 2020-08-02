@@ -1,4 +1,3 @@
-
 async function init() {
     
     const data = await d3.csv(
@@ -58,7 +57,7 @@ async function init() {
                         " City MPG: " + d["AverageCityMPG"] +
                         " Highway MPG: " + d["AverageHighwayMPG"]);
             })
-            //.on("mouseout", function() { tooltip.style("opacity", 0);})
+            .on("mouseout", function() { tooltip.style("opacity", 0);})
     ;;
     
 
@@ -85,5 +84,19 @@ async function init() {
         .attr("transform", "translate("+margin+","+(height+margin)+")")
         .call(xAxis);
  
+    d3.select("#Next").on("change", function(d) {
+        // recover the option that has been chosen
+        var selectedOption = d3.select(this).property("value")
+        // run the updateChart function with this selected option
+        //update(selectedOption)
+        console.log("Next: " + selectedOption);
+    })
+    d3.select("#Prev").on("change", function(d) {
+        // recover the option that has been chosen
+        var selectedOption = d3.select(this).property("value")
+        // run the updateChart function with this selected option
+        //update(selectedOption)       
+        console.log("Prev: " + selectedOption);
+    })
 
 }

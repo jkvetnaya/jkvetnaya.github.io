@@ -111,11 +111,28 @@ function render(data, option_num) {
     
     var yAxis = d3.axisLeft(ys)
             .tickValues([5, 10, 20, 50, 100])
-            .tickFormat(d3.format("~s"))
-            ;
+            .tickFormat(d3.format("~s"));
     
-    var xAxis = d3.axisBottom(xs)
-            ;
+    d3.select("svg")
+    .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 20)
+        .attr("x",  0 - (height / 2)-60)
+        .style("text-anchor", "middle")
+        .style("font-weight", "bold")
+        .style("font-size", "15px")
+        .text("Highway Miles per Gallon (logarithmic scale)");
+    
+    var xAxis = d3.axisBottom(xs);
+    
+    d3.select("svg")
+        .append("text")      // text label for the x axis
+        .attr("x", width / 2 + 30 )
+        .attr("y",  height + margin + 40)
+        .style("text-anchor", "middle")
+        .style("font-weight", "bold")
+        .style("font-size", "15px")
+        .text("Engine Fuel");
     
     d3.select("svg")
         .append("g")

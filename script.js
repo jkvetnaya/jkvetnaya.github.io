@@ -121,16 +121,37 @@ function render(data, option_num) {
             .tickFormat(d3.format("~s"))
             ;
     
+ 
+    
     d3.select("svg")
         .append("g")
         .attr("transform", "translate("+margin+","+margin+")")
         .call(yAxis);
+    
+    d3.select("svg")
+        .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 20)
+            .attr("x",  0 - (height / 2)-60)
+            .style("text-anchor", "middle")
+            .style("font-weight", "bold")
+            .style("font-size", "15px")
+            .text("Highway Miles per Gallon (logarithmic scale)");
             
 
     d3.select("svg")
         .append("g")
         .attr("transform", "translate("+margin+","+(height+margin)+")")
         .call(xAxis);
+    
+    d3.select("svg")
+        .append("text")      // text label for the x axis
+        .attr("x", width / 2 + 30 )
+        .attr("y",  height + margin + 40)
+        .style("text-anchor", "middle")
+        .style("font-weight", "bold")
+        .style("font-size", "15px")
+        .text("City Miles per Gallon (logarithmic scale)");
 }
 
 async function init() {

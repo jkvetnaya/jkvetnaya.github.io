@@ -96,30 +96,42 @@ function render(data, option_num) {
         .style("top", "650px")
         .html("Engine efficiency depends primarily on the number of cylinders.");
     
-    annotation1.style("opacity", 1)
-        .style("left", "380px")
-        .style("top", "280px")
-        .html("Zero cylinders (electrical)");
+    if(option_num == "All" || option_num == 0) {
+        annotation1.style("opacity", 1)
+            .style("left", "380px")
+            .style("top", "280px")
+            .html("Zero cylinders (electrical)");
+    } else {
+        annotation1.style("opacity", 0);
+    }
     
-    annotation2.style("opacity", 1)
-        .style("left", "140px")
-        .style("top", "450px")
-        .html("Two to four\ncylinders");
+    if(option_num == "All" || option_num == 2 || 
+       option_num == 3 || option_num == 4) {
+        annotation2.style("opacity", 1)
+            .style("left", "140px")
+            .style("top", "450px")
+            .html("Two to four\ncylinders");
+    } else {
+        annotation2.style("opacity", 0);
+    }
     
-    annotation3.style("opacity", 1)
-        .style("left", "75px")
-        .style("top", "500px")
-        .html("Six to\ntwelve\ncylinders");
+    if(option_num == "All" || option_num == 6 || 
+       option_num == 8 || option_num == 12) {
+        annotation3.style("opacity", 1)
+            .style("left", "75px")
+            .style("top", "500px")
+            .html("Six to\ntwelve\ncylinders");
+    } else {
+        annotation3.style("opacity", 0);
+    }
     
     var yAxis = d3.axisLeft(ys)
             .tickValues([10, 20, 50, 100])
-            .tickFormat(d3.format("~s"))
-            ;
+            .tickFormat(d3.format("~s"));
     
     var xAxis = d3.axisBottom(xs)
             .tickValues([10, 20, 50, 100])
-            .tickFormat(d3.format("~s"))
-            ;
+            .tickFormat(d3.format("~s"));
     
  
     

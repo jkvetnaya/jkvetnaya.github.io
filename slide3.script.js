@@ -1,25 +1,65 @@
 function option_number(option) {
     var option_num;
-    if(option == "All") {
+    if(option.search("All") > -1) {
         option_num = "All";     
-    } else if(option == "Zero") {
+    } else if(option.search("Zero") > -1) {
         option_num = 0;
-    } else if(option == "Two") {
+    } else if(option.search("Two") > -1) {
         option_num = 2;
-    } else if(option == "Three") {
+    } else if(option.search("Three") > -1) {
         option_num = 3;
-    } else if(option == "Four") {
+    } else if(option.search("Four") > -1) {
         option_num = 4;
-    } else if(option == "Six") {
+    } else if(option.search("Six") > -1) {
         option_num = 6;
-    } else if(option == "Eight") {
+    } else if(option.search("Eight") > -1) {
         option_num = 8;
-    } else if(option == "Twelve") {
+    } else if(option.search("Twelve") > -1) {
         option_num = 12
     }
     return option_num;
 }
+function is_valid_option(option) {
+   var option_num;
+    if(option.search("All") > -1) {
+        return true;     
+    } else if(option.search("Zero") > -1) {
+        return true; 
+    } else if(option.search("Two") > -1) {
+        return true; 
+    } else if(option.search("Three") > -1) {
+       return true; 
+    } else if(option.search("Four") > -1) {
+        return true; 
+    } else if(option.search("Six") > -1) {
+        return true; 
+    } else if(option.search("Eight") > -1) {
+        return true; 
+    } else if(option.search("Twelve") > -1) {
+        return true; 
+    }
+    return false;
+}
 
+function to_option(option_num) {
+    var ret = "All";
+    if(option_num == 0) {
+        ret =  "Zero";
+    } else if(option_num == 2) {
+        ret = "Two";
+    } else if(option_num == 3) {
+        ret = "Three";
+    } else if(option_num == 4) {
+        ret = "Four";
+    } else if(option_num == 6) {
+        ret = "Six";
+    } else if(option_num == 8) {
+        ret = "Eight";
+    } else if(option_num == 12) {
+        ret = "Twelve";
+    }
+    return ret;
+}
 
 function render(data, option_num) {
     d3.selectAll("svg > *").remove();
@@ -182,17 +222,21 @@ async function init() {
 
     function onchange() {
         selectValue = d3.select('select').property('value')
-        console.log("Options val = " + selectValue);
         var option_num = option_number(selectValue);
-        document.cookie = selectValue;
+        console.log("Step1: delete cookie");
+        document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        console.log("Step2: after deleting cookie: " + document.cookie + ";");
+        document.cookie = "value=" + selectValue +"; path=/;" ;
+        console.log("Step3: after deleting cookie: " + document.cookie + ";");
         render(data, option_num);
     };
 
     var option = document.cookie;
-    if(option == "") {
+    console.log("option=" + option + ";");
+    if(is_valid_option(option) == false) {
         option = "All";
     }
     var option_num = option_number(option);
-    d3.select('select').property('value', option);
+    d3.select('select').property('value', to_option(option_num));
     render(data, option_num);
 }

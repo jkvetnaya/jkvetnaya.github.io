@@ -1,3 +1,4 @@
+var annotation4_text = "The overall message of this presentation is to demonstrate that while car makes and fuel types are important predictors of car engine efficiency, the most reliable predictor is the number of cylinders in the car engine. To this effect, the first scene presents an overall picture of engine efficiency for both city and highway. Each individual car information is represented by a circle. The size of each circle is proportional to the number of cylinders in the corresponding car’s engine. It appears that, besides higher efficiency on the highway than in the city, we see another trend. The sizes of the circles (representing number of cylinders in the engine) are very neatly arranged from biggest to smallest, with biggest being on the lower left of the chart and having the lowest efficiency, and smallest being at the top right of the chart and having the highest efficiency. While we observe the trend that most engines are more efficient on the highway than in the city, it is apparent that the number of cylinders in the engine predicts its efficiency overall."
 
 function option_number(option) {
     var option_num;
@@ -76,6 +77,7 @@ function render(data, option_num) {
     var annotation1 = d3.select("#annotation1");
     var annotation2 = d3.select("#annotation2");
     var annotation3 = d3.select("#annotation3");
+    var annotation4 = d3.select("#annotation4");
     
 
     var xdomain = [10, 150];
@@ -131,10 +133,15 @@ function render(data, option_num) {
                 }
             })
     ;;
-    annotation.style("opacity", 1)
+    annotation.style("opacity", 0)
         .style("left", "70px")
         .style("top", "650px")
         .html("Engine efficiency depends primarily on the number of cylinders.");
+    
+    annotation4.style("opacity", 1)
+        .style("left", "550px")
+        .style("top", "260px")
+        .html(annotation4_text);
     
     if(option_num == "All" || option_num == 0) {
         annotation1.style("opacity", 1)
@@ -227,7 +234,7 @@ async function init() {
             .text(function (d) { return d; });
 
     function onchange() {
-         selectValue = d3.select('select').property('value')
+        selectValue = d3.select('select').property('value')
         var option_num = option_number(selectValue);
         console.log("Step1: delete cookie");
         document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";

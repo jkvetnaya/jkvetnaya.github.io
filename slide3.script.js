@@ -1,3 +1,5 @@
+var annotation4_text = "The third scene of this visualization continues to reinforce the overall message. Now it looks at the engine efficiency (miles/gallon) on the highway vs. engine fuel type. Each individual data point is represented by a circle and is a particular car make; the size of the engine (number of cylinders) is proportional to the size of corresponding circle. As is the case in Scene 2, regardless of the engine fuel type, we observe the same trend: bigger engines are less fuel efficient. It is shown in the chart with consistent change of circle size from bigger to smaller as we move up the miles/gallon axis. Thus, regardless of the engine fuel type (gasoline, diesel, electricity) and driving pattern (city vs. highway) smaller engines (less cylinders) are more fuel efficient. Again, this trend is highlighted by annotations that mark the general region of three major engine size groups."
+
 function option_number(option) {
     var option_num;
     if(option.search("All") > -1) {
@@ -75,7 +77,8 @@ function render(data, option_num) {
     var annotation1 = d3.select("#annotation1");
     var annotation2 = d3.select("#annotation2");
     var annotation3 = d3.select("#annotation3");
-    
+    var annotation4 = d3.select("#annotation4");
+
     var xdomain = ["Diesel", "Electricity", "Gasoline"];
     var xrange = [100, 200, 300];
     var ydomain = [5, 150];
@@ -129,10 +132,15 @@ function render(data, option_num) {
                         }
                     }, 2000);
             });
-    annotation.style("opacity", 1)
+    annotation.style("opacity", 0)
         .style("left", "70px")
         .style("top", "650px")
         .html("Engine efficiency depends primarily on the number of cylinders.");
+    
+    annotation4.style("opacity", 1)
+        .style("left", "550px")
+        .style("top", "260px")
+        .html(annotation4_text);
     
     if(option_num == "All" || option_num == 0) {
         annotation1.style("opacity", 1)
